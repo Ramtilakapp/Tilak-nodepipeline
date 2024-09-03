@@ -4,6 +4,10 @@ files:
   - source: /
     destination: /var/nodeapp/
 hooks:
+  BeforeInstall:
+    - location: scripts/cleanup.sh
+      timeout: 300
+      runas: root
   AfterInstall:
     - location: scripts/npm-install.sh
       timeout: 300
