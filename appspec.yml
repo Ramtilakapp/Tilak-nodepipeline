@@ -3,6 +3,7 @@ os: linux
 files:
   - source: /
     destination: /var/nodeapp/
+     overwrite: true
 hooks:
   AfterInstall:
     - location: scripts/npm-install.sh
