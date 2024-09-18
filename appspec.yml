@@ -2,7 +2,7 @@ version: 0.0
 os: linux
 files:
   - source: /
-    destination: /home/ssm-user/node-app/
+    destination: /home/ssm-user/tilak-3-node-app/
 hooks:
   AfterInstall:
     - location: scripts/start_server.sh
