@@ -13,7 +13,8 @@ phases:
       - echo "Running linter"
       - npm run lint
       - echo "Logging in to Amazon ECR..."
-      - aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 654654277756.dkr.ecr.ap-south-1.amazonaws.com/node-repo
+      - aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 038462757595.dkr.ecr.ap-south-1.amazonaws.com
+      
   build:
     commands:
       - echo "Build started on `date`"
@@ -22,13 +23,14 @@ phases:
       - npm test
       - echo "Building the Docker image..."
       - docker build -t node-repo .
-      - docker tag node-repo:latest 654654277756.dkr.ecr.ap-south-1.amazonaws.com/node-repo:latest
+      - docker tag tilak-3-node-app:latest 038462757595.dkr.ecr.ap-south-1.amazonaws.com/tilak-3-node-app:latest
+      
   post_build:
     commands:
       - echo "Build completed on `date`"
       - echo "Pushing the Docker image to ECR..."
-      - docker push 654654277756.dkr.ecr.ap-south-1.amazonaws.com/node-repo:latest
-
+      - docker push 038462757595.dkr.ecr.ap-south-1.amazonaws.com/tilak-3-node-app:latest
+      
 artifacts:
   files:
     - '**/*'
