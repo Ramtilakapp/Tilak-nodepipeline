@@ -7,7 +7,7 @@ if [ "$(docker ps -q -f name=tilak-3-node-app)" ]; then
 fi
 
 # Pull the latest image from ECR
-$(aws ecr get-login --no-include-email --region eu-north-1)
+$(aws ecr get-login --no-include-email --region ap-south-1)
 docker pull 038462757595.dkr.ecr.ap-south-1.amazonaws.com/tilak-3-node-app:latest
 
 # Run the new container
