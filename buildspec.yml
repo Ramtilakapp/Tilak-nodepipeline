@@ -3,23 +3,32 @@ version: 0.2
 phases:
   install:
     commands:
-      - echo Installing source NPM dependencies...
+      - echo "Installing source NPM dependencies..."
       - npm install
-      - echo Installing Mocha...
+      - echo "Installing Mocha..."
       - npm install -g mocha
+      - echo "Docker should already be running in the CodeBuild environment."
   pre_build:
     commands:
-      - echo Running linter
+      - echo "Running linter"
       - npm run lint
+      - echo "Logging in to Amazon ECR..."
+      - aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 654654277756.dkr.ecr.ap-south-1.amazonaws.com/node-repo
   build:
     commands:
-      - echo Build started on `date`
-      - echo Compiling the Node.js code
-      - echo Running unit tests
+      - echo "Build started on `date`"
+      - echo "Compiling the Node.js code"
+      - echo "Running unit tests"
       - npm test
+      - echo "Building the Docker image..."
+      - docker build -t node-repo .
+      - docker tag node-repo:latest 654654277756.dkr.ecr.ap-south-1.amazonaws.com/node-repo:latest
   post_build:
     commands:
-      - echo Build completed on `date`
+      - echo "Build completed on `date`"
+      - echo "Pushing the Docker image to ECR..."
+      - docker push 654654277756.dkr.ecr.ap-south-1.amazonaws.com/node-repo:latest
+
 artifacts:
   files:
     - '**/*'
