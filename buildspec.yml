@@ -8,12 +8,17 @@ phases:
       - echo "Installing Mocha..."
       - npm install -g mocha
       - echo "Docker should already be running in the CodeBuild environment."
+  
   pre_build:
     commands:
       - echo "Running linter"
       - npm run lint
       - echo "Logging in to Amazon ECR..."
-      - aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 038462757595.dkr.ecr.ap-south-1.amazonaws.com
+      - |
+        aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 038462757595.dkr.ecr.ap-south-1.amazonaws.com || {
+          echo "ECR login failed. Check IAM permissions and ECR repository settings."
+          exit 1
+        }
       
   build:
     commands:
@@ -30,7 +35,7 @@ phases:
       - echo "Build completed on `date`"
       - echo "Pushing the Docker image to ECR..."
       - docker push 038462757595.dkr.ecr.ap-south-1.amazonaws.com/tilak-3-node-app:latest
-      
+
 artifacts:
   files:
     - '**/*'
