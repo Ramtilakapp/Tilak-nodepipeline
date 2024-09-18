@@ -22,7 +22,7 @@ phases:
       - echo "Running unit tests"
       - npm test
       - echo "Building the Docker image..."
-      - docker build -t node-repo .
+      - docker build -t tilak-3-node-app .
       - docker tag tilak-3-node-app:latest 038462757595.dkr.ecr.ap-south-1.amazonaws.com/tilak-3-node-app:latest
       
   post_build:
